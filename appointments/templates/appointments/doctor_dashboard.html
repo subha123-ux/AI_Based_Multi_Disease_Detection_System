@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .dashboard-container {
+        max-width: 1100px;
+        margin: 20px auto;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    table {
+        width: 120%;
+        border-collapse: collapse;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    th {
+        background: #1f3c88;
+        color: white;
+        padding: 12px;
+    }
+
+    td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+        background: #f5f5f5;
+    }
+
+    .update-btn {
+        padding: 6px 12px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+
+    .update-btn:hover {
+        background: #218838;
+    }
+
+    .footer {
+        position: relative;
+        bottom: 0;
+        width: 98.7%;
+        margin-top: 255px;
+    }
+</style>
+
+<div class="dashboard-container">
+
+    <h2>🩺 Doctor Dashboard — All Appointments</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for app in appointments %}
+        <tr>
+            <td>{{ app.patient.username }}</td>
+            <td>{{ app.patient_age }}</td>
+            <td>{{ app.date }}</td>
+            <td>{{ app.time }}</td>
+            <td>{{ app.message }}</td>
+            <td><b>{{ app.status }}</b></td>
+
+            <td>
+                <a class="update-btn" href="{% url 'update_appointment_status' app.id %}">
+                    Update Status
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

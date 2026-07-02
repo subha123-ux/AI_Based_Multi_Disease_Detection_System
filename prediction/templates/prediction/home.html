@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+
+    <div class="left card">
+        <h3>How System Works</h3>
+        <p>
+            The system accepts a medical image, preprocesses it, analyzes features using a GNN deep learning model,
+            predicts disease probability, displays real-time results, and generates a downloadable report while
+            maintaining prediction history.
+        </p>
+        <p>
+            <strong>Step 1:</strong> Upload a medical image such as X-ray, MRI, CT Scan, or skin image using the secure
+            upload system.<br><br>
+
+            <strong>Step 2:</strong> The uploaded image is preprocessed automatically. The system resizes, normalizes,
+            and enhances image quality for accurate analysis.<br><br>
+
+            <strong>Step 3:</strong> A trained Graph Neural Network (GNN) model analyzes the image by extracting
+            medical features and patterns.<br><br>
+
+            <strong>Step 4:</strong> The Artificial Intelligence model compares detected patterns with trained disease
+            datasets to identify possible abnormalities.<br><br>
+
+            <strong>Step 5:</strong> The system predicts the disease along with confidence score based on model
+            probability.<br><br>
+
+            <strong>Step 6:</strong> Real-time prediction results are displayed instantly on the screen for quick
+            diagnosis support.<br><br>
+
+            <strong>Step 7:</strong> Patient details and prediction history are securely stored at Admin side for future
+            reference.<br><br>
+
+            <strong>Step 8:</strong> Users can download an AI-generated medical report for consultation with healthcare
+            professionals.
+        </p>
+    </div>
+
+    <div class="right card">
+        <h3>Predict Disease</h3>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label>Name:</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+
+            <label>Age:</label>
+            <input type="number" name="age" placeholder="Enter your age" required>
+
+            <label>Gender:</label>
+            <select name="gender">
+                <option value="">Select Gender</option>
+                <option value="male">Male 👨</option>
+                <option value="female">Female 👩</option>
+                <option value="other">Other 🤔</option>
+            </select>
+
+            <label>Upload Image:</label>
+            <input type="file" name="image" required>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if result %}
+        <hr>
+        <h4>Prediction Result:</h4>
+        <p><strong>Disease:</strong> {{ result }}</p>
+        <p><strong>Confidence:</strong> {{ confidence }}%</p>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

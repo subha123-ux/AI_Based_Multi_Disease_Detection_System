@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Doctor Appointments</h2>
+
+<table>
+<tr>
+    <th>Patient</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Message</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+{% for ap in appointments %}
+<tr>
+    <td>{{ ap.patient.username }}</td>
+    <td>{{ ap.date }}</td>
+    <td>{{ ap.time }}</td>
+    <td>{{ ap.message }}</td>
+    <td>{{ ap.status }}</td>
+
+    <td>
+        <form method="POST" action="{% url 'update_status' ap.id %}">
+            {% csrf_token %}
+            <select name="status">
+                <option>Pending</option>
+                <option>Approved</option>
+                <option>Completed</option>
+                <option>Rejected</option>
+            </select>
+            <button type="submit">Update</button>
+        </form>
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

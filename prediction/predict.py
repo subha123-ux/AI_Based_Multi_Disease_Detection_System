@@ -1,0 +1,23 @@
+import numpy as np
+import json
+from tensorflow.keras.preprocessing import image
+from .ml_model import model
+
+with open("model/class_indices.json") as f:
+    class_indices = json.load(f)
+
+CLASS_NAMES = {v: k for k, v in class_indices.items()}
+
+
+def predict_image(img_path):
+
+    img = image.load_img(img_path, target_size=(224,224))
+    img = image.img_to_array(img) / 255.0
+    img = np.expand_dims(img, axis=0)
+
+    preds = model.predict(img)
+
+    index = int(np.argmax(preds))
+    confidence = float(np.max(preds))
+
+    return CLASS_NAMES[index], confidence

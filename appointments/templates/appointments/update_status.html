@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    body {
+        background: rgb(105, 229, 243);
+    }
+
+    .update-container {
+        width: 600px;
+        margin: 70px auto;
+        padding: 40px 35px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        text-align: center;
+        font-family: 'Segoe UI', sans-serif;
+        transition: 0.3s;
+    }
+
+    .update-container h2 {
+        color: #0d47a1;
+        margin-bottom: 25px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .appointment-info {
+        background: linear-gradient(135deg, #f1f6ff, #e3ecff);
+        padding: 18px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        text-align: left;
+        font-size: 15px;
+        border-left: 5px solid #1f3c88;
+    }
+
+    .appointment-info p {
+        margin: 6px 0;
+        color: #333;
+    }
+
+    .appointment-info strong {
+        color: #1f3c88;
+    }
+
+    select {
+        width: 100%;
+        padding: 13px;
+        border-radius: 12px;
+        border: 1px solid #d0d7ff;
+        font-size: 15px;
+        margin-bottom: 20px;
+        background: #f9fbff;
+        transition: all 0.3s ease;
+    }
+
+    select:focus {
+        border-color: #4a6cf7;
+        box-shadow: 0 0 10px rgba(74, 108, 247, 0.25);
+        outline: none;
+    }
+
+    .update-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #1f3c88, #4a6cf7);
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .update-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(31, 60, 136, 0.35);
+        background: linear-gradient(135deg, #4a6cf7, #1f3c88);
+    }
+
+    @media (max-width: 500px) {
+        .update-container {
+            margin: 30px 15px;
+            padding: 25px;
+        }
+    }
+</style>
+
+<div class="update-container">
+
+    <h2>🩺 Update Appointment Status</h2>
+
+    <div class="appointment-info">
+        <p><strong>Patient:</strong> {{ appointment.patient.username }}</p>
+        <p><strong>Age:</strong> {{ appointment.patient_age }}</p>
+        <p><strong>Date:</strong> {{ appointment.date }}</p>
+        <p><strong>Time:</strong> {{ appointment.time }}</p>
+        <p><strong>Message:</strong> {{ appointment.message }}</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <select name="status" required>
+            <option value="">-- Select Status --</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+
+        <button type="submit" class="update-btn">
+            ✅ Update Status
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

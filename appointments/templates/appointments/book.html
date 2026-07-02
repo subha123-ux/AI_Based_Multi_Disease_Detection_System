@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<style>
+    .appointment-container {
+        max-width: 950px;
+        margin: auto;
+        padding: 40px 45px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .appointment-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #1f3c88;
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .form-column {
+        background: #f9fafc;
+        padding: 25px 30px;
+        border-radius: 18px;
+        border: 1px solid #e5e7eb;
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: block;
+        color: #2d2d2d;
+    }
+
+    input,
+    textarea,
+    .styled-select {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #4f4f4f;
+        font-size: 15px;
+        background: #fff;
+        transition: all 0.25s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    .styled-select:focus {
+        border-color: #1f3c88;
+        box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.15);
+        outline: none;
+    }
+
+    .styled-select {
+        width: 115%;
+        appearance: none;
+        background-image: url("data:image/svg+xml;utf8,<svg fill='%231f3c88' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 18px;
+    }
+
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        margin-top: 25px;
+        width: 100%;
+        padding: 17px;
+        border: none;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #28a745, #218838);
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(135deg, #34d058, #1e7e34);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(33, 136, 56, 0.35);
+    }
+
+    .success-message {
+        background: #d1fae5;
+        color: #065f46;
+        padding: 15px 18px;
+        border-radius: 14px;
+        border-left: 6px solid #10b981;
+        margin-bottom: 25px;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="appointment-container">
+    <h2>🩺 Book Doctor Appointment</h2>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="success-message">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-row">
+
+            <div class="form-column">
+                <div class="form-group">
+                    <label>Patient Name</label>
+                    <input type="text" name="patient_name" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Patient Age</label>
+                    <input type="number" name="patient_age" placeholder="30" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Patient Email</label>
+                    <input type="email" name="patient_email" placeholder="john@example.com" required>
+                </div>
+            </div>
+
+            <div class="form-column">
+                <div class="form-group" style="margin-bottom: 40px;">
+                    <label>Select Doctor</label>
+                    <select name="doctor_reg" class="styled-select" required>
+                        <option value="">-- Select Doctor --</option>
+                        {% for doctor in doctors %}
+                        <option value="{{ doctor.registration_number }}">
+                            {{ doctor.name }} ({{ doctor.registration_number }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 18px;">
+                    <label>Appointment Date</label>
+                    <input type="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Appointment Time</label>
+                    <input type="time" name="time" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" placeholder="Describe your problem..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Book Appointment</button>
+    </form>
+</div>
+
+{% endblock %}

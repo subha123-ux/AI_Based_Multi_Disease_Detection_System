@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+    <h2 style="text-decoration: underline;">Register</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Username:</label>
+        <input type="text" name="username" placeholder="Enter username" required>
+
+        <label>Name:</label>
+        <input type="text" name="name" placeholder="Enter full name" required>
+
+        <label>Age:</label>
+        <input type="number" name="age" placeholder="Enter age" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" placeholder="Enter email" required>
+
+        <label>Password:</label>
+        <input type="password" name="password" placeholder="Enter password" required>
+
+        <label class="form-label">Register As:</label>
+        <select name="role" class="form-select" required>
+            <option value="">-- Select Role --</option>
+            <option value="USER">👤 User</option>
+            <option value="DOCTOR">🩺 Doctor</option>
+        </select>
+
+        <label for="registration_number">Registration Number:</label>
+        <input type="text" name="registration_number" placeholder="Only for doctors" id="registration_number">
+
+        <button type="submit">Register</button>
+    </form>
+
+    <br>
+
+    <p>
+        <a href="{% url 'login' %}" style="color: blue;">Already have an account? Login</a>
+    </p>
+</div>
+
+{% endblock %}

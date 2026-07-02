@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.result-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    width: 100%;
+    height: 500px;
+    margin-top: 50px;
+}
+
+.result-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.result-title {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+.patient-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #1e1e1e;
+    font-family: 'Arial', sans-serif;
+}
+
+.prediction-info {
+    margin-top: 10px;
+}
+
+.prediction-info p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+
+.image-box {
+    margin-top: 15px;
+}
+
+.image-box img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-back {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #6c63ff, #48c6ef);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-back:hover {
+    transform: translateY(-2px);
+}
+</style>
+
+<div class="result-container">
+
+    <div class="result-card">
+        <h2 class="result-title">🧾 Prediction Result</h2>
+
+
+        <div class="patient-info">
+            <p><strong>Name:</strong> {{ prediction.name }}</p>
+            <p><strong>Age:</strong> {{ prediction.age }}</p>
+            <p><strong>Gender:</strong> {{ prediction.gender }}</p>
+        </div>
+
+        <hr>
+
+        <div class="prediction-info">
+            <p><strong>Disease:</strong> {{ prediction.predicted_disease }}</p>
+            <p><strong>Confidence:</strong> {{ prediction.confidence }}%</p>
+        </div>
+
+
+        <div class="image-box">
+            <img src="{{ prediction.image.url }}" alt="Uploaded Image">
+        </div>
+
+
+        <a href="{% url 'home' %}" class="btn-back">🔙 Predict Another</a>
+        <a href="{% url 'download_report' prediction.id %}" class="btn-back">📄 Download Report</a>
+
+    </div>
+
+</div>
+
+{% endblock %}

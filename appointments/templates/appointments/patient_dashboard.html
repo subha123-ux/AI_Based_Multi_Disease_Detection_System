@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .dashboard-container {
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  table {
+    width: 120%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  th {
+    background-color: #1f3c88;
+    color: white;
+    padding: 12px;
+  }
+
+  td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+
+  .status {
+    font-weight: bold;
+  }
+
+  .success-message {
+    color: green;
+    font-weight: 600;
+  }
+
+  .footer {
+    position: relative;
+    bottom: 0;
+    width: 98.7%;
+    margin-top: 220px;
+  }
+</style>
+
+<div class="dashboard-container">
+
+  <h2>My Appointments</h2>
+
+  {% if messages %}
+  {% for message in messages %}
+  <p class="success-message">{{ message }}</p>
+  {% endfor %}
+  {% endif %}
+
+  {% if appointments %}
+  <table>
+    <tr>
+      <th>Patient Name</th>
+      <th>Patient Age</th>
+      <th>Doctor</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Message</th>
+      <th>Status</th>
+    </tr>
+
+    {% for app in appointments %}
+    <tr>
+      <td>{{ app.patient.username }}</td>
+      <td>{{ app.patient_age }}</td>
+      <td>{{ app.doctor }}</td>
+      <td>{{ app.date }}</td>
+      <td>{{ app.time }}</td>
+      <td>{{ app.message }}</td>
+      <td class="status">{{ app.status }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  {% else %}
+  <p>No appointments booked yet.</p>
+  {% endif %}
+
+</div>
+
+{% endblock %}

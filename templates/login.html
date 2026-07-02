@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card">
+    <h2 style="text-decoration: underline;">Login</h2>
+    
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKT-zEVF-E4SEkm3us25N1DoHQLnC4XWumjw&s" alt="Login Image" style="width: 100px; height: auto; display:block; margin:0 auto;">
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Username:</label>
+        <input type="text" name="username" required>
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+    <br>
+    <a href="{% url 'register' %}" style="color: blue;">Don't have account? Register</a>
+</div>
+
+{% endblock %}
